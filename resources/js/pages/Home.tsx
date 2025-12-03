@@ -1,18 +1,24 @@
 import { Index as Posts } from "../pages/Posts/Index";
 import GuestLayout from "@/layouts/GuestLayout";
 
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+
 interface HomeProps {
-  posts: any[];
+  posts: Post[];
 }
 
 export default function Home({ posts }: HomeProps) {
-    return (
-        <GuestLayout>
-            <h1 className="my-5 text-xl font-semibold text-center text-gray-100">
-                Welcome to my Blog
-            </h1>
+  return (
+    <GuestLayout>
+      <h1 className="my-5 text-xl font-semibold text-center text-gray-100">
+        Welcome to my Blog
+      </h1>
 
-            <Posts posts={posts}/>
-        </GuestLayout>
-    )
+      <Posts posts={posts} />
+    </GuestLayout>
+  );
 }
