@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorepostRequest extends FormRequest
@@ -11,7 +12,7 @@ class StorepostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,21 @@ class StorepostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'author' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:posts,title',
+            ],
+            'body' => [
+                'required',
+                'string',
+            ],
         ];
     }
 }
