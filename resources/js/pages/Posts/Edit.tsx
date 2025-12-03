@@ -1,23 +1,32 @@
 import { Link, useForm } from "@inertiajs/react";
 import GuestLayout from "@/layouts/GuestLayout";
 
-export default function Create() {
+interface Post {
+    id: number;
+    title: string;
+    author: string;
+    body: string;
+    created_at?: string;
+    updated_at?: string;
+}
 
-    const { data, setData, post, processing, errors } = useForm({
-        author: "",
-        title: "",
-        body: "",
+export default function Show({ post }: { post: Post }) {
+
+    const { data, setData, put, processing, errors } = useForm({
+        author: post.author || "",
+        title: post.title || "",
+        body: post.body || "",
     });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post("/posts");
+        put(`/posts/${post.id}`);
     };
     return (
         <GuestLayout>
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col space-y-8 text-left">
-                    <h1 className="mx-auto text-xl">Create a New Post</h1>
+                    <h1 className="mx-auto text-xl">Update {post.title}</h1>
                     <label>
                         Title
                         <input
@@ -61,7 +70,7 @@ export default function Create() {
                         disabled={processing}
                         className="px-4 py-2 mt-4 text-white bg-purple-500 rounded-md hover:bg-purple-600 cursor-pointer"
                     >
-                        Create Post
+                        Update
                     </button>
                 </div>
             </form>

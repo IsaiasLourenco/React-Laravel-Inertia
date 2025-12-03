@@ -33,7 +33,9 @@ class PostController extends Controller
     public function store(StorepostRequest $request)
     {
         $post = Post::create($request->validated());
-        return redirect()->route('home');
+        return redirect()
+            ->route('home')
+            ->with('success', 'Post created!');
     }
 
     /**
@@ -41,7 +43,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return Inertia::render('Posts/Show', [
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -49,7 +53,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return Inertia::render('Posts/Edit', [
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -57,7 +63,10 @@ class PostController extends Controller
      */
     public function update(UpdatepostRequest $request, Post $post)
     {
-        //
+        $post->update($request->validated());
+        return redirect()
+            ->route('home')
+            ->with('success', 'Post updated!');
     }
 
     /**
@@ -65,6 +74,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()
+            ->route('home')
+            ->with('success', 'Post deleted!');;
     }
 }
